@@ -1,0 +1,27 @@
+# Ignore the environment file with all secrets
+srcs/.env
+
+# Ignore the data directory
+/data/
+
+# --- User-specific files and directories to ignore ---
+# These should not be part of the project repository
+
+# Shell and editor history/info
+.bash_history
+.lesshst
+.viminfo
+.bash*
+.profile
+.vim/
+
+# Local configuration and cache
+.local/
+.sudo_as_admin_successful
+
+# Sensitive configuration directories
+.docker/
+.ssh/
+
+# Vim swap files
+*.swp
