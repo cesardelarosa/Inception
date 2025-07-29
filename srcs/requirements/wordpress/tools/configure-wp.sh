@@ -29,6 +29,17 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
                    --user_pass=${WP_USER_PASSWORD} \
                    --role=author \
                    --allow-root
+
+    # Install and activate Redis cache plugin
+    wp plugin install redis-cache --activate --allow-root
+
+    # Configure Redis connection and enable the object cache drop-in
+    wp config set WP_REDIS_HOST redis --allow-root
+    wp config set WP_REDIS_PORT 6379 --allow-root
+    wp redis enable --allow-root
+
+    # Set correct ownership for all files after they are created
+    chown -R www-data:www-data /var/www/html
 fi
 
 # Execute the Dockerfile's CMD to start php-fpm

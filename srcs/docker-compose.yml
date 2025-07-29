@@ -21,6 +21,7 @@ services:
     restart: on-failure
     depends_on:
       - mariadb
+      - redis
     env_file: .env
 
   nginx:
@@ -36,6 +37,67 @@ services:
     restart: on-failure
     depends_on:
       - wordpress
+
+  adminer:
+    container_name: adminer
+    build:
+      context: ./requirements/adminer
+    networks:
+      - inception
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    depends_on:
+      - mariadb
+
+  redis:
+    container_name: redis
+    build:
+      context: ./requirements/redis
+    networks:
+      - inception
+    restart: on-failure
+  
+  static-site:
+    container_name: static-site
+    build:
+      context: ./requirements/static-site
+    networks:
+      - inception
+    ports:
+      - "8000:80"
+    restart: on-failure
+  
+  ftp-server:
+    container_name: ftp-server
+    build:
+      context: ./requirements/ftp-server
+      args:
+        - FTP_USER=${FTP_USER}
+        - FTP_PASS=${FTP_PASS}
+    networks:
+      - inception
+    volumes:
+      - wp_files:/var/www/html
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    restart: on-failure
+    depends_on:
+      - wordpress
+
+  portainer:
+    container_name: portainer
+    build:
+      context: ./requirements/portainer
+    networks:
+      - inception
+    ports:
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    restart: on-failure
 
 networks:
   inception:
@@ -54,3 +116,4 @@ volumes:
       type: none
       o: bind
       device: /home/cde-la-r/data/wordpress
+  portainer_data: {}

@@ -42,6 +42,9 @@ down:
 clean:
 	@echo "$(YELLOW)WARNING: Cleaning the environment. All data in volumes will be lost.$(RESET)"
 	@$(COMPOSE_CMD) down --volumes
+	@echo "$(BLUE)Deleting host data directories...$(RESET)"
+	@sudo rm -rf $(DATA_PATH_DB)/*
+	@sudo rm -rf $(DATA_PATH_WP)/*
 	@echo "$(GREEN)Environment cleaned successfully.$(RESET)"
 
 # Force a full clean and restart of the application
