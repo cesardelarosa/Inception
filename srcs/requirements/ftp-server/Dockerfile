@@ -10,6 +10,10 @@ RUN mkdir -p /var/run/vsftpd/empty
 # Copy vsftpd configuration
 COPY ./tools/vsftpd.conf /etc/vsftpd.conf
 
+# Entrypoint setup
+COPY ./tools/entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Arguments for user creation, passed from docker-compose.yml
 ARG FTP_USER
 ARG FTP_PASS
@@ -24,3 +28,6 @@ EXPOSE 21100-21110
 
 # Run vsftpd
 CMD ["/usr/sbin/vsftpd", "/etc/vsftpd.conf"]
+
+# Entrypoint
+ENTRYPOINT ["entrypoint.sh"]
