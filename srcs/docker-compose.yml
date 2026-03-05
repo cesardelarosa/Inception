@@ -66,6 +66,10 @@ services:
       - inception
     ports:
       - "8000:80"
+    volumes:
+      - ../README.md:/docs/README.md:ro
+      - ../USER_DOC.md:/docs/USER_DOC.md:ro
+      - ../DEV_DOC.md:/docs/DEV_DOC.md:ro
     restart: on-failure
   
   ftp-server:
