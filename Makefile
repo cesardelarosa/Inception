@@ -38,18 +38,33 @@ down:
 	@$(COMPOSE_CMD) down
 	@echo "$(GREEN)Services stopped successfully.$(RESET)"
 
-# Stop and remove everything, including volumes with data
-clean:
-	@echo "$(YELLOW)WARNING: Cleaning the environment. All data in volumes will be lost.$(RESET)"
-	@$(COMPOSE_CMD) down --volumes
-	@echo "$(BLUE)Deleting host data directories...$(RESET)"
-	@sudo rm -rf $(DATA_PATH_DB)/*
-	@sudo rm -rf $(DATA_PATH_WP)/*
+# Stop and remove containers, networks, and base images (preserves host data)
+clean: down
+	@echo "$(YELLOW)Cleaning the environment. Host data will be preserved.$(RESET)"
+	@$(COMPOSE_CMD) down --rmi all
 	@echo "$(GREEN)Environment cleaned successfully.$(RESET)"
 
-# Force a full clean and restart of the application
+# Full clean: brutally wipe everything, including docker system and host data
+fclean: clean
+	@echo "$(YELLOW)WARNING: Deep cleaning the environment. ALL DATA WILL BE LOST...$(RESET)"
+	@echo "$(BLUE)Removing docker cache and host directories...$(RESET)"
+	-@docker stop $$(docker ps -qa) 2>/dev/null || true
+	-@docker rm $$(docker ps -qa) 2>/dev/null || true
+	-@docker rmi -f $$(docker images -qa) 2>/dev/null || true
+	-@docker volume rm $$(docker volume ls -q) 2>/dev/null || true
+	-@docker network rm $$(docker network ls -q) 2>/dev/null || true
+	@sudo rm -rf $(DATA_PATH_DB)/*
+	@sudo rm -rf $(DATA_PATH_WP)/*
+	@echo "$(GREEN)Total wipe completed.$(RESET)"
+
+# Restart the host machine securely by stopping services first
+restart: down
+	@echo "$(YELLOW)Rebooting the host system...$(RESET)"
+	@sudo systemctl reboot
+
+# Force a full clean and start completely from scratch
 re:
-	@make clean
+	@make fclean
 	@make all
 
 # Follow the logs of all running services
@@ -58,4 +73,4 @@ logs:
 	@$(COMPOSE_CMD) logs -f
 
 # Phony targets are rules that are not actual files
-.PHONY: all up build down clean re logs
+.PHONY: all up build down clean fclean restart re logs
