@@ -4,6 +4,9 @@ FROM debian:bookworm-slim
 # Install vsftpd
 RUN apt-get update && apt-get install -y vsftpd
 
+# Create directory required for vsftpd
+RUN mkdir -p /var/run/vsftpd/empty
+
 # Copy vsftpd configuration
 COPY ./tools/vsftpd.conf /etc/vsftpd.conf
 
