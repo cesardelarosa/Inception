@@ -22,7 +22,7 @@ ARG FTP_PASS
 ENV FT_USER=${FTP_USER}
 
 # Create user, set password, and define home directory
-RUN useradd -m -d /var/www/html ${FTP_USER} && \
+RUN useradd -m -d /var/www/html -u 33 -o ${FTP_USER} && \
     echo "${FTP_USER}:${FTP_PASS}" | chpasswd
 
 # Expose FTP control and passive ports
