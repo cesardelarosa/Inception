@@ -18,6 +18,9 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 ARG FTP_USER
 ARG FTP_PASS
 
+# Enviroment variable for bash
+ENV FT_USER=${FTP_USER}
+
 # Create user, set password, and define home directory
 RUN useradd -m -d /var/www/html ${FTP_USER} && \
     echo "${FTP_USER}:${FTP_PASS}" | chpasswd
