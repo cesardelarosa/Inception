@@ -22,7 +22,7 @@ To build, install, and execute this project, follow these steps:
    ```
    This will automatically create the persistent data directories on the host system (`/home/cde-la-r/data/*`), build all custom Docker images, and spin up the containers in detached mode.
 
-*To stop the services, simply run `make down`. For more detailed operations, refer to `USER_DOC.md` and `DEV_DOC.md`.*
+*To gracefully stop the services, run `make down`. To perform a complete, destructive reset of the environment (including wiping all data), run `make fclean`. For more detailed operations, refer to `USER_DOC.md` and `DEV_DOC.md`.*
 
 ## Project Description
 
@@ -54,4 +54,4 @@ Inception leverages **Docker** to encapsulate each service (Nginx, WordPress, Ma
 - [MariaDB Knowledge Base](https://mariadb.com/kb/en/) — Reference for database initialization and user privilege granting commands.
 
 **Use of AI:**
-Artificial Intelligence (LLMs) was used as an assistant throughout the lifecycle of this project. It helped debug complex Bash script behaviors, clarified confusing Docker build errors, and answered targeted questions regarding optimal software configurations. No core application structure or mandatory scripts were wholesale generated without complete verification and understanding from the developer.
+Artificial Intelligence (LLMs) was used as an assistant throughout the lifecycle of this project. It helped debug complex Bash script behaviors and writing .md files, clarified confusing Docker build errors, and answered targeted questions regarding optimal software configurations. No core application structure or mandatory scripts were wholesale generated without complete verification and understanding from the developer.

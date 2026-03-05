@@ -29,10 +29,22 @@ You can easily control the project lifecycle using the provided `Makefile`.
   ```
   This gracefully stops the services without deleting any persistent data.
 
-* **To completely clean the project:**
-  If you wish to remove all containers, networks, and erase all persistent data, run:
+* **To clean the project (preserving data):**
+  If you want to remove the containers and the cached Docker images but keep your WordPress site and Database intact, run:
   ```bash
   make clean
+  ```
+
+* **To securely reboot the host machine:**
+  If you need to reboot the server, use this command to ensure containers are stopped safely before the reboot:
+  ```bash
+  make restart
+  ```
+
+* **To completely wipe the project (Total Reset):**
+  If you wish to brutally remove all containers, networks, Docker caches, and **erase all persistent data in the host**, run:
+  ```bash
+  make fclean
   ```
 
 ## 3. Accessing the Services

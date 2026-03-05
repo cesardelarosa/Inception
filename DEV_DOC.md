@@ -35,9 +35,9 @@ The project exclusively uses a `Makefile` situated at the root of the repository
 
 ## 3. Managing Containers and Volumes
 Use the `Makefile` commands for day-to-day administration:
-* `make build`: Only builds the container images based on the Dockerfiles, without starting them up.
-* `make down`: Stops and removes the active containers and networks created by `make up`.
-* `make clean`: Performs `make down`, and removes volumes and deletes the actual host data folder (`/home/cde-la-r/data/*`). **Warning: This performs a total wipe of persistent data.**
+* `make clean`: Performs `make down`, and removes cached images created by `docker compose`. Host data is preserved.
+* `make restart`: Gracefully brings down the services and issues a reboot command to the host OS.
+* `make fclean`: Performs `make clean`, brutally removes any lingering containers, all Docker cache/volumes, and deletes the actual host data folders (`/home/cde-la-r/data/*`). **Warning: This performs a total wipe of persistent data.**
 * `make logs`: Attaches to the stdout of all running containers.
 
 Alternatively, you can manually use standard Docker commands:
