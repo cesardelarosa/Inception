@@ -26,6 +26,11 @@ convert_md() {
          -c style.css \
          "$INPUT_FILE"
 
+    # Fix markdown links to point to generated html files instead of .md files
+    sed -i 's/href="USER_DOC\.md"/href="user_doc.html"/g' /tmp/body.html
+    sed -i 's/href="DEV_DOC\.md"/href="dev_doc.html"/g' /tmp/body.html
+    sed -i 's/href="README\.md"/href="index.html"/g' /tmp/body.html
+
     # Quick and dirty way to inject the navigation right after the opening <body> tag using sed
     sed '/<body class="markdown-body">/r /var/www/html/nav.html' /tmp/body.html > "/var/www/html/$OUTPUT_FILE"
 }

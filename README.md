@@ -22,7 +22,7 @@ To build, install, and execute this project, follow these steps:
    ```
    This will automatically create the persistent data directories on the host system (`/home/cde-la-r/data/*`), build all custom Docker images, and spin up the containers in detached mode.
 
-*To gracefully stop the services, run `make down`. To perform a complete, destructive reset of the environment (including wiping all data), run `make fclean`. For more detailed operations, refer to `USER_DOC.md` and `DEV_DOC.md`.*
+*To gracefully stop the services, run `make down`. To perform a complete, destructive reset of the environment (including wiping all data), run `make fclean`. For more detailed operations, refer to [`USER_DOC.md`](USER_DOC.md) and [`DEV_DOC.md`](DEV_DOC.md).*
 
 ## Project Description
 
